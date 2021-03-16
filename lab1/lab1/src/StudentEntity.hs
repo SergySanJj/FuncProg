@@ -18,15 +18,9 @@ import           Data.Tuple.Select
 
 unpack [MySQLInt64U id, MySQLText name] = (fromIntegral id, Data.Text.unpack name)
 
-data StudentData = StudentData {id :: Integer, name :: String} deriving (Show)
-getId :: StudentData -> Integer
-getId (StudentData x _) = x
-getName :: StudentData -> String 
-getName (StudentData _ x) = x 
-
+data StudentData = StudentData {uid :: Integer, name :: String} deriving (Show)
 setName :: StudentData -> String -> StudentData
-setName student = StudentData (getId student)
-
+setName student = StudentData (uid student)
 
 
 instance Entity StudentData where
@@ -40,12 +34,12 @@ instance Entity StudentData where
         return $ StudentData (sel1 selected) (sel2 selected)
 
     updateEntity conn student = do
-        execute conn q [toMySql $ getName student, toMySql $ getId student]
+        execute conn q [toMySql $ name student, toMySql $ uid student]
         where
             q = "UPDATE `students` SET name = ? where students.id = ?;"
-    
+
     createEntity conn student = do
-        execute conn q [toMySql $ getName student]
+        execute conn q [toMySql $ name student]
         where
             q = "insert into lab1_student (name) values (?)"
 

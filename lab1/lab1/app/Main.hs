@@ -16,9 +16,9 @@ main = do
    let res = Entity.getEntity conn 1 :: IO StudentData
    print =<< res
    pp <- res
-   print $ getName pp
+   print $ name pp
    let changed = setName pp "giovanni d"
-   print $ getName changed 
+   print $ name changed 
 
    let res2 = Entity.updateEntity conn changed :: IO OK
    print =<< res2
