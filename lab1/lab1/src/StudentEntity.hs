@@ -25,7 +25,7 @@ setName student = StudentData (uid student)
 
 instance Entity StudentData where
     getEntity conn studentId = do
-        s <- prepareStmt conn "SELECT * FROM `students` where students.id = ?"
+        s <- prepareStmt conn "SELECT * FROM `students` where students.uid_ = ?"
         (defs, is) <- queryStmt conn s $ toMySqlParams [studentId]
 
         (rows ::[[MySQLValue]]) <- Streams.toList is
@@ -36,10 +36,20 @@ instance Entity StudentData where
     updateEntity conn student = do
         execute conn q [toMySql $ name student, toMySql $ uid student]
         where
-            q = "UPDATE `students` SET name = ? where students.id = ?;"
+            q = "UPDATE `students` SET name = ? where students.uid_ = ?;"
 
     createEntity conn student = do
         execute conn q [toMySql $ name student]
         where
             q = "insert into lab1_student (name) values (?)"
 
+    getAll conn = do
+        (defs, is) <- query_ conn "Select * from students"
+        (rows ::[[MySQLValue]]) <- Streams.toList is
+        return $ toStudent rows
+
+
+toStudent :: [[MySQLValue]] -> [StudentData]
+toStudent rows = do
+    let unpacked = map unpack rows
+    map (\x -> StudentData (sel1 x) (sel2 x)) unpacked

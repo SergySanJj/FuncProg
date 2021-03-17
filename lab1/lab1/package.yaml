@@ -27,6 +27,7 @@ dependencies:
 - mysql-haskell
 - io-streams
 - tuple
+- scotty
 
 library:
   source-dirs: src

@@ -9,5 +9,6 @@ import qualified System.IO.Streams as Streams
 
 class Entity a where
     getEntity :: MySQLConn -> Integer -> IO a
+    getAll :: MySQLConn  -> IO [a]
     updateEntity :: MySQLConn -> a -> IO OK
     createEntity :: MySQLConn -> a -> IO OK

@@ -13,29 +13,29 @@ CREATE TABLE IF NOT EXISTS cabinets
 
 CREATE TABLE IF NOT EXISTS students
 (
-    id SERIAL PRIMARY KEY,
+    uid_ SERIAL PRIMARY KEY,
     name VARCHAR(20)
 );
 
 CREATE TABLE IF NOT EXISTS teachers
 (
-    id SERIAL PRIMARY KEY,
+    uid_ SERIAL PRIMARY KEY,
     name VARCHAR(20)
 );
 
 
 CREATE TABLE IF NOT EXISTS workplaces
 (
-    id SERIAL PRIMARY KEY,
+    uid_ SERIAL PRIMARY KEY,
     cabinet_num INT REFERENCES cabinets (num),
-    student_id INT
+    student_uid_ INT
 );
 
 CREATE TABLE IF NOT EXISTS class
 (
-    id SERIAL PRIMARY KEY,
+    uid_ SERIAL PRIMARY KEY,
     cabinet_num INT REFERENCES cabinets (num),
-    teacher_id INT REFERENCES teachers (id),
+    teacher_uid_ INT REFERENCES teachers (uid_),
     begin_ TIMESTAMP,
     end_ TIMESTAMP
 );
