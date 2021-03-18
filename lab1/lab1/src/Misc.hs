@@ -28,3 +28,6 @@ toMySqlParams :: (MySqlConverter p) => [p] -> [MySQLValue]
 toMySqlParams list =  [toMySql (last list)]
 
 
+readInt :: String -> Integer 
+readInt i = read  i :: Integer
+

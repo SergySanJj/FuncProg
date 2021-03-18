@@ -28,6 +28,7 @@ dependencies:
 - io-streams
 - tuple
 - scotty
+- aeson
 
 library:
   source-dirs: src

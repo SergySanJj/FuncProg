@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: 67c1b8f87805eba3395701e3b5cfcc24d625200d08bab3f6ebe3926b52b27781
+-- hash: f0334bc9e93d1b8c9a979130000ed3eb86a608ee7f5ad5a8be34ad6c50efd234
 
 name:           lab1
 version:        0.1.0.0
@@ -35,7 +35,8 @@ library
   hs-source-dirs:
       src
   build-depends:
-      array
+      aeson
+    , array
     , base >=4.7 && <5
     , bytestring
     , io-streams
@@ -53,7 +54,8 @@ executable lab1-exe
       app
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      array
+      aeson
+    , array
     , base >=4.7 && <5
     , bytestring
     , io-streams
@@ -73,7 +75,8 @@ test-suite lab1-test
       test
   ghc-options: -threaded -rtsopts -with-rtsopts=-N
   build-depends:
-      array
+      aeson
+    , array
     , base >=4.7 && <5
     , bytestring
     , io-streams

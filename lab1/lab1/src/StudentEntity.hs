@@ -4,6 +4,8 @@
 {-# LANGUAGE FlexibleInstances #-}
 {-# LANGUAGE UndecidableInstances #-}
 
+{-# LANGUAGE TemplateHaskell #-}
+
 module StudentEntity where
 
 import Misc
@@ -15,6 +17,8 @@ import qualified Data.ByteString.Char8    as BS
 import qualified Data.Text
 import           Data.List
 import           Data.Tuple.Select
+import Data.Aeson
+import Data.Text (Text)
 
 unpack [MySQLInt64U id, MySQLText name] = (fromIntegral id, Data.Text.unpack name)
 
@@ -22,6 +26,11 @@ data StudentData = StudentData {uid :: Integer, name :: String} deriving (Show)
 setName :: StudentData -> String -> StudentData
 setName student = StudentData (uid student)
 
+instance ToJSON StudentData where
+ toJSON (StudentData uid name) =
+    object [ "uid"  .= uid
+           , "name"   .= name
+             ]
 
 instance Entity StudentData where
     getEntity conn studentId = do
@@ -41,7 +50,7 @@ instance Entity StudentData where
     createEntity conn student = do
         execute conn q [toMySql $ name student]
         where
-            q = "insert into lab1_student (name) values (?)"
+            q = "insert into students (name) values (?)"
 
     getAll conn = do
         (defs, is) <- query_ conn "Select * from students"
