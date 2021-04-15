@@ -7,8 +7,8 @@ DROP TABLE IF EXISTS class;
 CREATE TABLE IF NOT EXISTS cabinets
 (
     num INT PRIMARY KEY,
-    begin_ TIMESTAMP,
-    end_ TIMESTAMP
+    begin_ INT,
+    end_ INT
 );
 
 CREATE TABLE IF NOT EXISTS students
@@ -36,8 +36,8 @@ CREATE TABLE IF NOT EXISTS class
     uid_ SERIAL PRIMARY KEY,
     cabinet_num INT REFERENCES cabinets (num),
     teacher_uid_ INT REFERENCES teachers (uid_),
-    begin_ TIMESTAMP,
-    end_ TIMESTAMP
+    begin_ INT,
+    end_ INT
 );
 
 INSERT INTO teachers

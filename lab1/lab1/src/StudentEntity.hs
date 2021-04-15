@@ -39,15 +39,16 @@ instance Entity StudentData where
 
         (rows ::[[MySQLValue]]) <- Streams.toList is
         let selected = last (map unpack rows)
+        print "Haha"
 
         return $ StudentData (sel1 selected) (sel2 selected)
 
-    updateEntity conn student = do
-        execute conn q [toMySql $ name student, toMySql $ uid student]
+    updateEntity conn student = execute conn q [toMySql $ name student, toMySql $ uid student]
         where
             q = "UPDATE `students` SET name = ? where students.uid_ = ?;"
 
     createEntity conn student = do
+        print "here"
         execute conn q [toMySql $ name student]
         where
             q = "insert into students (name) values (?)"
@@ -55,6 +56,7 @@ instance Entity StudentData where
     getAll conn = do
         (defs, is) <- query_ conn "Select * from students"
         (rows ::[[MySQLValue]]) <- Streams.toList is
+        print "Haha2"
         return $ toStudent rows
 
 

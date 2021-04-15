@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: f0334bc9e93d1b8c9a979130000ed3eb86a608ee7f5ad5a8be34ad6c50efd234
+-- hash: 94b2d1cb982fbcc943a09fb8c8846b2e0731cbc6176899ad143658cc6ce0c5a5
 
 name:           lab1
 version:        0.1.0.0
@@ -27,6 +27,7 @@ source-repository head
 
 library
   exposed-modules:
+      CabinetEntity
       Entity
       Misc
       StudentEntity
