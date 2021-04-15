@@ -18,7 +18,7 @@ import           Data.Tuple.Select
 import Data.Aeson
 import Data.Text (Text)
 
-unpack [MySQLInt64U num, MySQLInt64U begin_, MySQLInt64U end_] = (fromIntegral num, fromIntegral begin_, fromIntegral end_)
+unpack [MySQLInt32 num, MySQLInt32 begin_, MySQLInt32 end_] = (fromIntegral num, fromIntegral begin_, fromIntegral end_)
 
 data CabinetData = CabinetData {cabinetNumber :: Integer, workBegin :: Integer, workEnd :: Integer } deriving (Show)
 setBegin :: CabinetData -> Integer -> CabinetData
@@ -47,13 +47,14 @@ instance Entity CabinetData where
         where
             q = "UPDATE `cabinets` SET begin_ = ?, SET end = ? where num = ?;"
 
-    createEntity conn cabinet = execute conn q [toMySql $ workBegin cabinet, toMySql $ workBegin cabinet, toMySql $ workEnd cabinet]
+    createEntity conn cabinet = execute conn q [toMySql $ cabinetNumber cabinet, toMySql $ workBegin cabinet, toMySql $ workEnd cabinet]
         where
             q = "insert into cabinets (num, begin_, end_) values (?, ?, ?)"
 
     getAll conn = do
         (defs, is) <- query_ conn "Select * from cabinets"
         (rows ::[[MySQLValue]]) <- Streams.toList is
+        print rows
         return $ toCabinet rows
 
 toCabinet :: [[MySQLValue]] -> [CabinetData]

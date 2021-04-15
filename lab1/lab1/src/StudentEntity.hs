@@ -39,7 +39,6 @@ instance Entity StudentData where
 
         (rows ::[[MySQLValue]]) <- Streams.toList is
         let selected = last (map unpack rows)
-        print "Haha"
 
         return $ StudentData (sel1 selected) (sel2 selected)
 
@@ -56,7 +55,6 @@ instance Entity StudentData where
     getAll conn = do
         (defs, is) <- query_ conn "Select * from students"
         (rows ::[[MySQLValue]]) <- Streams.toList is
-        print "Haha2"
         return $ toStudent rows
 
 
